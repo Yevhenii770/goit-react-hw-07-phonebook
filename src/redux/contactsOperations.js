@@ -1,9 +1,13 @@
+import * as contactsApi from '../components/Api/contacts-api';
+import * as contactsAction from './contactsActions';
+
 export const fetchContacts = () => async dispatch => {
-  dispatch('booksActions.fetchBookRequest(books)');
+  dispatch(contactsAction.fetchContactsRequest());
 
   try {
-    dispatch('booksActions.fetchBookSuccess(books)');
-  } catch {
-    dispatch('booksActions.fetchBookError(books)');
+    const contacts = await contactsApi.fetchContacts();
+    dispatch(contactsAction.fetchContactsSuccess(contacts));
+  } catch (error) {
+    dispatch(contactsAction.fetchContactsError(error));
   }
 };

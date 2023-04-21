@@ -1,13 +1,18 @@
 import { UlOfContact, ContactItem, Button } from './ContactList.styled';
-import { deleteContacts, getDataArray } from '../../redux/userSlice';
+// import { deleteContacts } from '../../redux/userSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
+import { contactsSelectors, contactsOperations } from '../../redux';
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const arrayContacts = useSelector(getDataArray);
-  console.log(arrayContacts);
+  const arrayContacts = useSelector(contactsSelectors.getDataArray);
+  const filterValue = useSelector(contactsSelectors.getFilterValue);
 
-  const filterValue = useSelector(state => state.filter.filterValue);
+  useEffect(() => {
+    dispatch(contactsOperations.fetchContacts());
+  }, [dispatch]);
 
   const filterNormilized = filterValue.toLowerCase().trim();
   const visibleContacts = arrayContacts.filter(contact =>
@@ -19,7 +24,7 @@ const ContactList = () => {
       {visibleContacts.map(({ id, number, name }) => (
         <ContactItem key={id}>
           {name}: {number}
-          <Button onClick={() => dispatch(deleteContacts(id))} type="button">
+          <Button onClick={() => {}} type="button">
             Delete
           </Button>
         </ContactItem>
@@ -29,3 +34,4 @@ const ContactList = () => {
 };
 
 export default ContactList;
+// dispatch(deleteContacts(id));

@@ -4,6 +4,8 @@ export const Input = styled.input`
   border: 1px solid;
   outline: none;
   height: 30px;
+  border-radius: 5px;
+  border: 1px solid grey;
 `;
 
 export const Form = styled.form`
@@ -14,6 +16,7 @@ export const Form = styled.form`
   padding: 15px;
   width: 300px;
   border: 1px solid gray;
+  border-radius: 5px;
 `;
 
 export const Button = styled.button`

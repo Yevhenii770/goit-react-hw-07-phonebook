@@ -2,12 +2,13 @@ import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 import Modal from './Modal/Modal';
-import { Button } from '../components/ContactList/ContactList.styled';
+import { Button } from 'components/ContactList/ContactList.styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { showModal } from '.././redux/userSlice';
+import { showModal } from 'redux/userSlice';
+import * as contactSelectors from 'redux/contactsSelectors';
 
 export default function App() {
-  const modal = useSelector(state => state.modal.showModal);
+  const modal = useSelector(contactSelectors.getModalIsOpen);
   const dispatch = useDispatch();
 
   const togleModal = () => {

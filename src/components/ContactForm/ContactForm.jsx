@@ -1,14 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { PushNotify, PushNotifyError } from '../Notify/Notify';
 import { nanoid } from 'nanoid';
 import { Input, Form, Button, Label } from './ContactForm.styled';
-import { addData, getDataArray } from '../../redux/userSlice';
-import { PushNotify, PushNotifyError } from '../Notify/Notify';
+// import { addData } from '../../redux/userSlice';
+import * as contactSelectors from '../../redux/contactsSelectors';
 
 function ContactForm() {
   const nameInputId = nanoid();
   const numberInputId = nanoid();
 
-  const contacts = useSelector(getDataArray);
+  const contacts = useSelector(contactSelectors.getDataArray);
 
   const dispatch = useDispatch();
 
@@ -26,7 +27,7 @@ function ContactForm() {
     );
 
     if (!checkName) {
-      dispatch(addData(newContact));
+      // dispatch(addData(newContact));
       PushNotify(newContact.name);
     } else {
       PushNotifyError(newContact.name);

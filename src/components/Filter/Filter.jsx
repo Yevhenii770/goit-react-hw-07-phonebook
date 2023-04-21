@@ -1,10 +1,11 @@
 import { Input } from '../ContactForm/ContactForm.styled';
 import { Label } from './Filter.styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { filterQuery } from '../../redux/userSlice';
+import { filterQuery } from 'redux/userSlice';
+import * as contactSelectors from 'redux/contactsSelectors';
 
 const Filter = () => {
-  const value = useSelector(state => state.filter.filter);
+  const value = useSelector(contactSelectors.getFilterValue);
   const dispatch = useDispatch();
 
   const changeFilter = e => {
