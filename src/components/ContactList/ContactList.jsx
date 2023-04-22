@@ -1,14 +1,16 @@
 import { UlOfContact, ContactItem, Button } from './ContactList.styled';
-// import { deleteContacts } from '../../redux/userSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 import { contactsSelectors, contactsOperations } from '../../redux';
 
 const ContactList = () => {
-  const dispatch = useDispatch();
   const arrayContacts = useSelector(contactsSelectors.getDataArray);
   const filterValue = useSelector(contactsSelectors.getFilterValue);
+  const isLoading = useSelector(contactsSelectors.getIsLoading);
+  const error = useSelector(contactsSelectors.getSelectError);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(contactsOperations.fetchContacts());
@@ -20,18 +22,25 @@ const ContactList = () => {
   );
 
   return (
-    <UlOfContact>
-      {visibleContacts.map(({ id, number, name }) => (
-        <ContactItem key={id}>
-          {name}: {number}
-          <Button onClick={() => {}} type="button">
-            Delete
-          </Button>
-        </ContactItem>
-      ))}
-    </UlOfContact>
+    <>
+      {isLoading && !error && <b>Request in progress...</b>}
+      <UlOfContact>
+        {visibleContacts.map(({ id, phone, name }) => (
+          <ContactItem key={id}>
+            {name}:
+            <br />
+            {phone}
+            <Button
+              onClick={() => dispatch(contactsOperations.removeContact(id))}
+              type="button"
+            >
+              Delete
+            </Button>
+          </ContactItem>
+        ))}
+      </UlOfContact>
+    </>
   );
 };
 
 export default ContactList;
-// dispatch(deleteContacts(id));
